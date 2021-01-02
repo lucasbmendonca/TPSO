@@ -46,8 +46,7 @@ int acrescenta(char *ficheiro_o, char *ficheiro_d)
 
 int apaga(char *ficheiro)
 {
-    int fd;
-    int n;
+    int fd, n;
     int count = 1;
     char *conteudo = NULL;
     char *final = NULL;
@@ -379,10 +378,6 @@ int mostra(char *ficheiro)
     char *conteudo = NULL;
     char ch;
 
-    //if(ficheiro != 2){
-    // perror( "Nome do ficheiro não encontrado" );
-    //exit(1);}
-
     struct stat filestat;
     if (stat(ficheiro, &filestat) < 0)
     {
@@ -405,5 +400,10 @@ int mostra(char *ficheiro)
     write(1, conteudo, count);
     free(conteudo);
     close(fd);
+    return 1;
+}
+
+int executa_cmd_generico(char *str){
+    system(str);
     return 1;
 }

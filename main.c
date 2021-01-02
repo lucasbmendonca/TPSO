@@ -134,7 +134,7 @@ int main(int argc, char *argv[])
             }
             break;
             default:
-                system(comando);
+                res = executa_cmd_generico(comando);
                 break;
             }
         }

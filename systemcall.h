@@ -13,3 +13,4 @@ char *nomeUTL(char *idutl);
 int informa(char *ficheiro);
 int lista(char *ficheiro);
 int mostra(char *ficheiro);
+int executa_cmd_generico(char *str);
