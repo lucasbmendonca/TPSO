@@ -9,7 +9,7 @@
 int acrescenta(char *ficheiro_o, char *ficheiro_d);
 int apaga(char *ficheiro);
 int conta(char *argumento);
-char *nomeUTL(char *idutl);
+void nomeUTL(char *idutl, char *resultado);
 int informa(char *ficheiro);
 int lista(char *ficheiro);
 int mostra(char *ficheiro);

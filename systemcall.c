@@ -1,4 +1,5 @@
 #include "systemcall.h"
+#include "_utilities.h"
 
 int acrescenta(char *ficheiro_o, char *ficheiro_d)
 {
@@ -14,34 +15,32 @@ int acrescenta(char *ficheiro_o, char *ficheiro_d)
     if (stat(ficheiro_o, &filestat1) < 0)
     {
         perror("ficheiro de origem nao existe");
-        return 1;
+        return 0;
     }
     if (stat(ficheiro_d, &filestat2) < 0)
     {
         perror("ficheiro de Destino nao existe");
-        return 2;
+        return 0;
     }
+
+    int size = filestat1.st_size;
 
     if ((fd = open(ficheiro_o, O_RDONLY)) == -1)
     {
         perror("open");
+        return 0;
     }
 
-    while ((ret = read(fd, &ch, 1) != 0))
-    {
-        count++;
-    }
-
-    conteudo = (char *)malloc(count);
-    int tamanho = read(fd, conteudo, count);
+    conteudo = (char *)calloc(n, size);
+    int tamanho = read(fd, conteudo, size);
     close(fd);
 
     fd = open(ficheiro_d, O_RDWR | O_APPEND);
 
-    tamanho = write(fd, conteudo, count);
-    free(conteudo);
+    tamanho = write(fd, conteudo, size);
     close(fd);
-    return 3;
+
+    return 1;
 }
 
 int apaga(char *ficheiro)
@@ -107,7 +106,7 @@ int conta(char *argumento)
     return 1;
 }
 
-char *nomeUTL(char *idutl)
+void nomeUTL(char *idutl, char *resultado)
 {
     char id[4] = "1000";
     int fd;
@@ -118,7 +117,7 @@ char *nomeUTL(char *idutl)
     int conta_id = 0;
     int i = 0;
     int j = 0;
-    char *resultado = NULL;
+    //char *resultado = NULL;
     char nome[20];
     char uid[20];
     char ch;
@@ -154,13 +153,11 @@ char *nomeUTL(char *idutl)
             {
                 if (j == conta_id && j == 4) //são iguais
                 {
-                    resultado = malloc(conta_nome);
                     int x = 0;
                     for (x = 0; x < conta_nome; x++)
                     {
                         resultado[x] = nome[x];
                     }
-                    return resultado;
                 }
                 else
                 {
@@ -189,8 +186,6 @@ char *nomeUTL(char *idutl)
             i = 0;
         }
     }
-
-    return resultado;
 }
 
 int informa(char *ficheiro)
@@ -227,11 +222,12 @@ int informa(char *ficheiro)
         write(1, convertido, tamanho);
         free(convertido);
         write(1, " ", 1);
+        char nome[255];
 
-        char *nome = nomeUTL(converteItoa(fileStat.st_uid));
+        nomeUTL(converteItoa(fileStat.st_uid), nome);
         int s = qualTamanho(nome);
         write(1, nome, s);
-        free(nome);
+        //free(nome);
         write(1, " ", 1);
 
         convertido = converteItoa(fileStat.st_size);
@@ -258,8 +254,10 @@ int informa(char *ficheiro)
     else
     {
         if ((dp = opendir(ficheiro)) == NULL)
+        {
             perror("can’t open");
-
+            return 0;
+        }
         while ((dirp = readdir(dp)) != NULL)
         {
             stat(dirp->d_name, &fileStat);
@@ -282,10 +280,12 @@ int informa(char *ficheiro)
             free(convertido);
             write(1, " ", 1);
 
-            char *nome = nomeUTL(converteItoa(fileStat.st_uid));
+            char nome[400];
+
+            nomeUTL(converteItoa(fileStat.st_uid), nome);
             int s = qualTamanho(nome);
             write(1, nome, s);
-            free(nome);
+            //free(nome);
             write(1, " ", 1);
 
             convertido = converteItoa(fileStat.st_size);
@@ -366,8 +366,8 @@ int lista(char *ficheiro)
             write(1, "\n", 1);
         }
     }
-
     closedir(dp);
+    chdir(caminho);
     return 1;
 }
 
@@ -403,7 +403,8 @@ int mostra(char *ficheiro)
     return 1;
 }
 
-int executa_cmd_generico(char *str){
+int executa_cmd_generico(char *str)
+{
     system(str);
     return 1;
 }

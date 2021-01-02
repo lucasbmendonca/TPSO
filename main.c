@@ -3,12 +3,12 @@
 
 int main(int argc, char *argv[])
 {
-    /*if (argc != 1)
+    if (argc != 1)
     {
         write(1, "Para iniciar execute ./main sem argumentos", 43);
         write(1, "\n", 1);
         return 1;
-    }*/
+    }
 
     char comando[255];
     char cmd[255];
@@ -43,6 +43,7 @@ int main(int argc, char *argv[])
                     while (comando[y] == ' ')
                     {
                         y++;
+                        comando[0] = '1';
                     }
                 }
                 else
@@ -133,11 +134,21 @@ int main(int argc, char *argv[])
                 res = lista(arg1);
             }
             break;
+            case 7:
+            {
+                return 0;
+                break;
+            }
             default:
                 res = executa_cmd_generico(comando);
                 break;
             }
         }
+        write(1,"Terminou comando ",17);
+        write(1,cmd,qualTamanho(cmd));
+        write(1," com codigo ",12);
+        write(1,converteItoa(res),4);
+        write(1,"\n",2);
     }
     return 0;
 }
