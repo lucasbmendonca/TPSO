@@ -377,6 +377,7 @@ int mostra(char *ficheiro)
     int n, count = 0;
     char *conteudo = NULL;
     char ch;
+    printf("%d\n",ficheiro[1]);
 
     struct stat filestat;
     if (stat(ficheiro, &filestat) < 0)

@@ -5,11 +5,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "gcc-9 - Build and debug active file",
+            "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/a.out",
-            "args": ["gcc", "-Wall", "main.c", "_utilities.c", "systemcall.c"],
+            "program": "${workspaceFolder}/process",
+            "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
@@ -21,7 +21,33 @@
                     "text": "-enable-pretty-printing",
                     "ignoreFailures": true
                 }
+            ]
+        },
+        {
+            "name": "gcc-9 - Build and debug active file",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/a.out",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Skip stdio-common files",
+                    "text": "-interpreter-exec console \"skip -gfi stdlib/*.c\""
+                }   
             ],
+            "sourceFileMap": {
+                "/build/glibc-OTsEL5": "/usr/src/glibc"
+            },
             "preLaunchTask": "C/C++: gcc-9 build active file",
             "miDebuggerPath": "/usr/bin/gdb"
         }

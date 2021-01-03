@@ -24,7 +24,7 @@
             "command": "/usr/bin/gcc",
             "args": [
                 "-g",
-                "main.c",
+                "process.c",
                 "_utilities.c",
                 "systemcall.c"
             ],
