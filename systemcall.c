@@ -320,7 +320,7 @@ int lista(char *ficheiro)
     int i = 0;
     caminho = getcwd(NULL, 0);
 
-    if (ficheiro[0] == '\0')
+    if (ficheiro[0] == '\0' || *ficheiro == 0)
     {
         dp = opendir("./");
     }
@@ -377,7 +377,6 @@ int mostra(char *ficheiro)
     int n, count = 0;
     char *conteudo = NULL;
     char ch;
-    printf("%d\n",ficheiro[1]);
 
     struct stat filestat;
     if (stat(ficheiro, &filestat) < 0)
