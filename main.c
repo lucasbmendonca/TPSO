@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
                                 y++;
                                 ter++;
                             }
-                            if (conta_args > 2)
+                        char cmnd_aux[500];        if (conta_args > 2)
                             {
                                 arg1[seg] = '\0';
                                 arg2[ter] = '\0';

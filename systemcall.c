@@ -12,6 +12,7 @@ int acrescenta(char *ficheiro_o, char *ficheiro_d)
     struct stat filestat1;
     struct stat filestat2;
 
+    printf("%s%s\n",ficheiro_o,ficheiro_d);
     if (stat(ficheiro_o, &filestat1) < 0)
     {
         perror("ficheiro de origem nao existe");
@@ -37,6 +38,9 @@ int acrescenta(char *ficheiro_o, char *ficheiro_d)
 
     fd = open(ficheiro_d, O_RDWR | O_APPEND);
 
+    if (fd == -1)
+        return 0;
+    
     tamanho = write(fd, conteudo, size);
     close(fd);
 
@@ -320,7 +324,11 @@ int lista(char *ficheiro)
     int i = 0;
     caminho = getcwd(NULL, 0);
 
-    if (ficheiro[0] == '\0' || *ficheiro == 0)
+    if (ficheiro == NULL)
+    {
+        dp = opendir("./");
+    }
+    else if(ficheiro[0] == '\0')
     {
         dp = opendir("./");
     }
