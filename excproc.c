@@ -37,15 +37,6 @@ char **div_string(char *cmnd)
     return result;
 }
 
-void display_msg_for_cmd(char *type, char *cmd)
-{
-    write(1, "\nTerminou comando ", 20);
-    write(1, cmd, qualTamanho(cmd));
-    write(1, " com codigo ", 12);
-    write(1, type, 1);
-    write(1, "\n", 2);
-}
-
 int main(int argc, char *argv[])
 {
     int id, z;
@@ -74,7 +65,6 @@ int main(int argc, char *argv[])
         else if (id > 0)
         {
             wait((int *)0);
-            //display_msg_for_cmd("1", args[0]);
         }
         else if (id == -1)
         {

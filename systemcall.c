@@ -12,7 +12,7 @@ int acrescenta(char *ficheiro_o, char *ficheiro_d)
     struct stat filestat1;
     struct stat filestat2;
 
-    printf("%s%s\n",ficheiro_o,ficheiro_d);
+    //printf("%s%s\n",ficheiro_o,ficheiro_d);
     if (stat(ficheiro_o, &filestat1) < 0)
     {
         perror("ficheiro de origem nao existe");
@@ -390,7 +390,7 @@ int mostra(char *ficheiro)
     if (stat(ficheiro, &filestat) < 0)
     {
         perror("ficheiro nao existe");
-        return 1;
+        return 0;
     }
 
     if ((fd = open(ficheiro, O_RDONLY)) == -1)

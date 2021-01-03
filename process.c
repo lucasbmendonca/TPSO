@@ -5,6 +5,8 @@
 
 #define NUM_CMDS 7
 #define MAX_LENGHT 255
+#define OK '1'
+#define NOT_OK '0'
 
 typedef struct cmd
 {
@@ -20,6 +22,8 @@ cmd commands[NUM_CMDS] = {{"acrescenta", acrescenta},
                           {"mostra", mostra},
                           {"generico", executa_cmd_generico}};
 
+void display_msg_for_cmd(int type, char *cmd);
+
 int main(int argc, char *argv[])
 {
     int i;
@@ -31,7 +35,7 @@ int main(int argc, char *argv[])
     {
         if (strcmp(argv[0], commands[i].name) == 0)
         {
-            commands[i].function(argv[1], argv[2]);
+            display_msg_for_cmd(commands[i].function(argv[1], argv[2]),argv[0]);
             return 1;
         }
     }
@@ -42,6 +46,21 @@ int main(int argc, char *argv[])
         strcat(cmd_gen, " ");
     }
 
-    commands[NUM_CMDS-1].function(cmd_gen);
+    display_msg_for_cmd(commands[NUM_CMDS-1].function(cmd_gen),argv[0]);
     return 1;
+}
+
+void display_msg_for_cmd(int type, char *cmd)
+{  
+    char str[1];
+    if (type == 0)
+        str[0] = NOT_OK;
+    else
+        str[0] = OK;
+    
+    write(1, "\nTerminou comando ", 20);
+    write(1, cmd, qualTamanho(cmd));
+    write(1, " com codigo ", 12);
+    write(1, str, 1);
+    write(1, "\n", 2);
 }
